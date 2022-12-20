@@ -1,0 +1,84 @@
+function move_score(move) {
+  return match (move) {
+    'rock' => 1,
+    'paper' => 2,
+    'scissors' => 3,
+  };
+}
+
+function decode_move(move) {
+  return match (move) {
+    'A', 'X' => 'rock',
+    'B', 'Y' => 'paper',
+    'C', 'Z' => 'scissors',
+  };
+}
+
+function outcome(their_move, my_move) {
+  if (their_move == my_move) {
+    return 'draw';
+  }
+
+  return match (my_move) {
+    'rock' => match (their_move) {
+      'paper' => 'lose',
+      'scissors' => 'win',
+    },
+    'paper' => match (their_move) {
+      'rock' => 'win',
+      'scissors' => 'lose',
+    },
+    'scissors' => match (their_move) {
+      'rock' => 'lose',
+      'paper' => 'win',
+    },
+  };
+}
+
+function losing_move(their_move) {
+  return match (their_move) {
+    'rock' => 'scissors',
+    'paper' => 'rock',
+    'scissors' => 'paper',
+  }
+}
+
+function winning_move(their_move) {
+  return match (their_move) {
+    'rock' => 'paper',
+    'paper' => 'scissors',
+    'scissors' => 'rock',
+  }
+}
+
+{
+  # part 1
+  their_move = decode_move($[0]);
+  my_move = decode_move($[1]);
+  out = outcome(their_move, my_move);
+
+  score += match (out) {
+    'win' => 6,
+    'draw' => 3,
+  };
+  
+  score += move_score(my_move);
+
+  # part 2
+  score2 += match ($[1]) {
+    'X' => move_score(losing_move(their_move)),
+    'Y' => move_score(their_move) + 3,
+    'Z' => move_score(winning_move(their_move)) + 6,
+  };
+}
+
+{
+  # part 2
+  their_move = $[0];
+  end = $[1];
+}
+
+END {
+  print 'part 1:', score;
+  print 'part 2:', score2;
+}
