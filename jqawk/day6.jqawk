@@ -1,0 +1,36 @@
+function all_distinct(l) {
+  for (j = 0; j < l.length(); j++) {
+    for (k = j + 1; k < l.length(); k++) {
+      if (l[j] == l[k]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+{
+  last4 = [];
+  for (c, i in $) {
+    last4.push(c);
+    if (last4.length() == 4) {
+      if (all_distinct(last4)) {
+        print "part 1:", i + 1;
+        break;
+      }
+      last4.popfirst();
+    }
+  }
+
+  last14 = [];
+  for (c, i in $) {
+    last14.push(c);
+    if (last14.length() == 14) {
+      if (all_distinct(last14)) {
+        print "part 2:", i + 1;
+        break;
+      }
+      last14.popfirst();
+    }
+  }
+}
