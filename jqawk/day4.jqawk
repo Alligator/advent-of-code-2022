@@ -1,0 +1,42 @@
+function parse_line(l) {
+  parts = l.split(',');
+
+  fst = parts[0].split('-');
+  snd = parts[1].split('-');
+
+  return {
+    a1: int(fst[0]),
+    a2: int(fst[1]),
+    b1: int(snd[0]),
+    b2: int(snd[1]),
+  };
+}
+
+{
+  coords = parse_line($);
+
+  if ((coords.a1 >= coords.b1 && coords.a2 <= coords.b2)
+      || (coords.b1 >= coords.a1 && coords.b2 <= coords.a2)) {
+    part1++;
+  }
+
+  # brain won't work. dumb solution
+  for (a = coords.a1; a <= coords.a2; a++) {
+    m = false;
+    for (b = coords.b1; b <= coords.b2; b++) {
+      if (a == b) {
+        m = true;
+        part2++;
+        break;
+      }
+    }
+    if (m) {
+      break;
+    }
+  }
+}
+
+END {
+  print 'part 1:', part1;
+  print 'part 2:', part2;
+}
